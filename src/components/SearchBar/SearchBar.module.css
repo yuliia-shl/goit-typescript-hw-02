@@ -1,0 +1,42 @@
+.header {
+  padding: 8px;
+  background-color: #fee4e4;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 4px;
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.icon svg {
+  align-self: center;
+  fill: inherit;
+  stroke: inherit;
+}
+
+.input {
+  border: none;
+}
+
+.btn {
+  background-color: inherit;
+  border-radius: 4px;
+  border: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #fff5f5;
+}

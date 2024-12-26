@@ -1,0 +1,13 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+
+.galleryItem {
+  width: calc((100% - 20px) / 3);
+}

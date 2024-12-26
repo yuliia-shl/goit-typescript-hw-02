@@ -1,0 +1,17 @@
+.img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4px;
+  background-color: #fee4e4;
+}
+
+.bold {
+  font-weight: bold;
+  text-transform: capitalize;
+}
