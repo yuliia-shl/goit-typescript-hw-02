@@ -1,12 +1,17 @@
 import { Field, Form, Formik } from 'formik';
 import s from './SearchBar.module.css';
 import { MdImageSearch } from 'react-icons/md';
+import { FC } from 'react';
 
-const SearchBar = ({ onChangeQuery }) => {
+interface SearchBarProps {
+  onChangeQuery: (inputValue: string) => void;
+}
+
+const SearchBar: FC<SearchBarProps> = ({ onChangeQuery }) => {
   const initValues = {
     search: '',
   };
-  const handleSubmit = (values, options) => {
+  const handleSubmit = (values: { search: string }, options: { resetForm: () => void }) => {
     onChangeQuery(values.search);
     options.resetForm();
   };
