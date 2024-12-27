@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import SearchBar from './SearchBar/SearchBar';
-import ImageGallery from './ImageGallery/ImageGallery';
-import { fetchImg } from '../services/api';
-import Loader from './Loader/Loader';
-import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
+import SearchBar from '../SearchBar/SearchBar';
+import ImageGallery from '../ImageGallery/ImageGallery';
+import { fetchImg } from '../../services/api';
+import Loader from '../Loader/Loader';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import toast from 'react-hot-toast';
-import ImageModal from './ImageModal/ImageModal';
+import ImageModal from '../ImageModal/ImageModal';
+import { FetchImgResponse, Image, SelectedImage } from './App.types';
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
 
   useEffect(() => {
-    if (!query) {
+    if (!query.trim()) {
       return;
     }
 
@@ -28,7 +29,7 @@ function App() {
         setIsError(false); // Виключаємо показ помилки
 
         // Отримуємо результати запиту
-        const { results, total_pages } = await fetchImg(query, page);
+        const { results, total_pages } = await fetchImg<FetchImgResponse>(query, page);
         setTotalPages(total_pages);
 
         if (results.length === 0) {
@@ -53,7 +54,7 @@ function App() {
     getData();
   }, [query, page]);
 
-  const handleChangeQuery = inputValue => {
+  const handleChangeQuery = (inputValue: string) => {
     if (!inputValue.trim()) {
       toast(t => (
         <span>
@@ -66,15 +67,16 @@ function App() {
     setImages([]);
     setTotalPages(0);
     setPage(1);
-
     setQuery(inputValue);
   };
 
   const handleLoadMore = () => {
-    setPage(prev => prev + 1);
+    if (page < totalPages) {
+      setPage(prev => prev + 1);
+    }
   };
 
-  const openModal = image => {
+  const openModal = (image: Image) => {
     setSelectedImage({
       imageUrl: image.urls.regular,
       alt: image.alt_description,
