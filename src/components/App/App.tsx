@@ -19,7 +19,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
 
   useEffect(() => {
-    if (!query.trim()) {
+    if (!query) {
       return;
     }
 
@@ -70,9 +70,16 @@ function App() {
     setQuery(inputValue);
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (): void => {
     if (page < totalPages) {
       setPage(prev => prev + 1);
+      setTimeout(() => {
+        const newContentHeight = document.body.scrollHeight;
+        window.scrollTo({
+          top: newContentHeight,
+          behavior: 'smooth',
+        });
+      }, 500);
     }
   };
 
@@ -83,7 +90,7 @@ function App() {
     });
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setSelectedImage(null);
   };
 
