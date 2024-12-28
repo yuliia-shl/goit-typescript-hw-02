@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import ImageModal from '../ImageModal/ImageModal';
 import { FetchImgResponse, Image, SelectedImage } from './App.types';
 
-function App() {
+function App(): JSX.Element {
   const [images, setImages] = useState<Image[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -23,17 +23,17 @@ function App() {
       return;
     }
 
-    const getData = async () => {
+    const getData = async (): Promise<void> => {
       try {
         setIsLoading(true); // 1. Встановлюємо індикатор loading в true перед запитом
         setIsError(false); // Виключаємо показ помилки
 
         // Отримуємо результати запиту
-        const { results, total_pages } = await fetchImg<FetchImgResponse>(query, page);
+        const { results, total_pages }: FetchImgResponse = await fetchImg(query, page);
         setTotalPages(total_pages);
 
         if (results.length === 0) {
-          toast.error(t => (
+          toast.error((t: { id: string }) => (
             <span>
               <b>Зображення не знайдені </b>
               <button onClick={() => toast.dismiss(t.id)}>Dismiss</button>
@@ -74,9 +74,8 @@ function App() {
     if (page < totalPages) {
       setPage(prev => prev + 1);
       setTimeout(() => {
-        const newContentHeight = document.body.scrollHeight;
-        window.scrollTo({
-          top: newContentHeight,
+        window.scrollBy({
+          top: 500,
           behavior: 'smooth',
         });
       }, 500);
